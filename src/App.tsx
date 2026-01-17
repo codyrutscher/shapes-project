@@ -6,12 +6,14 @@ import type { Shape, Connector, ShapeType, ConnectorType, HistoryState } from '.
 import { Toolbar } from './components/Toolbar';
 import { Canvas } from './components/Canvas';
 import { PropertiesPanel } from './components/PropertiesPanel';
+import { HomePage } from './components/HomePage';
 import './App.css';
 
 const STORAGE_KEY = 'process-flow-diagram';
 const MAX_HISTORY = 50;
 
 function App() {
+  const [showEditor, setShowEditor] = useState(false);
   const [diagramName, setDiagramName] = useState('Untitled Diagram');
   const [backgroundColor, setBackgroundColor] = useState('#f5f5f5');
   const [shapes, setShapes] = useState<Shape[]>([]);
@@ -217,6 +219,10 @@ function App() {
   };
 
   const selectedShape = shapes.find((s) => s.id === selectedShapeId) || null;
+
+  if (!showEditor) {
+    return <HomePage onStart={() => setShowEditor(true)} />;
+  }
 
   return (
     <div className="app">
